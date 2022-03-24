@@ -9,11 +9,5 @@ import java.util.UUID;
 @Service
 public class AuthorService {
 
-    public List<Author> getAuthors() {
-        return List.of(
-                new Author(UUID.randomUUID(),
-                        "Эрих Мария Ремарк",
-                        "Биография")
-        );
-    }
+
 }
