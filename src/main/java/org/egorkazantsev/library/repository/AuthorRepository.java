@@ -1,6 +1,5 @@
 package org.egorkazantsev.library.repository;
 
-import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.jooq.generated.Tables;
 import org.egorkazantsev.library.jooq.generated.tables.daos.AuthorDao;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
@@ -11,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-//@RequiredArgsConstructor
 public class AuthorRepository {
 
     private final DSLContext dslContext;
@@ -25,18 +24,30 @@ public class AuthorRepository {
         this.authorDao = new AuthorDao(configuration);
     }
 
+    // find all
     public List<Author> findAllAuthors() {
         return authorDao.findAll();
-        /*return dslContext
-                .selectFrom(Tables.AUTHOR)
-                .fetchInto(Author.class);*/
     }
 
-    public String insertAuthor(Author author) {
-        dslContext
-                .insertInto(Tables.AUTHOR, Tables.AUTHOR.FULL_NAME, Tables.AUTHOR.BIO)
-                .values(author.getFullName(), author.getBio())
-                .execute();
-        return "author added";
+    // find by id
+    public Author findAuthorById(UUID id) {
+        return authorDao.findById(id);
+    }
+
+    // insert
+    public UUID insertAuthor(Author author) {
+        authorDao.insert(author);
+        return author.getId();
+    }
+
+    // delete by id
+    public void deleteAuthorById(UUID id) {
+        authorDao.deleteById(id);
+    }
+
+    // update
+    public UUID updateAuthor(Author author) {
+        authorDao.update(author);
+        return author.getId();
     }
 }
