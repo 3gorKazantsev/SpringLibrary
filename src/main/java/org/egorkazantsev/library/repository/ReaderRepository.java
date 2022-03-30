@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class ReaderRepository {
@@ -22,12 +23,30 @@ public class ReaderRepository {
         this.readerDao = new ReaderDao(configuration);
     }
 
+    // find all
     public List<Reader> findAllReaders() {
         return readerDao.findAll();
     }
 
-    public String insertReader(Reader reader) {
+    // find by id
+    public Reader findReaderById(UUID id) {
+        return readerDao.findById(id);
+    }
+
+    // insert
+    public UUID insertReader(Reader reader) {
         readerDao.insert(reader);
-        return "reader added";
+        return reader.getId();
+    }
+
+    // delete by id
+    public void deleteReaderById(UUID id) {
+        readerDao.deleteById(id);
+    }
+
+    // update
+    public UUID updateReader(Reader reader) {
+        readerDao.update(reader);
+        return reader.getId();
     }
 }

@@ -38,9 +38,8 @@ public class AuthorController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateAuthor(@RequestBody Author authorDetails) {
-        return authorService.updateAuthor(authorDetails);
+    public ResponseEntity<UUID> updateAuthor(@RequestBody Author author) {
+        return authorService.updateAuthor(author);
     }
-
 }
 

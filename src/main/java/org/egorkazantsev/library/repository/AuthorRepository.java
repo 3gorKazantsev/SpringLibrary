@@ -1,6 +1,5 @@
 package org.egorkazantsev.library.repository;
 
-import org.egorkazantsev.library.jooq.generated.Tables;
 import org.egorkazantsev.library.jooq.generated.tables.daos.AuthorDao;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.jooq.DSLContext;
