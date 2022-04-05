@@ -1,10 +1,9 @@
 package org.egorkazantsev.library.service;
 
 import lombok.RequiredArgsConstructor;
-import org.egorkazantsev.library.dto.BookDto;
+import org.egorkazantsev.library.dto.book.BookDto;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
 import org.egorkazantsev.library.repository.BookRepository;
-import org.jooq.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
