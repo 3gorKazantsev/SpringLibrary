@@ -1,4 +1,4 @@
-package org.egorkazantsev.library.dto.book;
+package org.egorkazantsev.library.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

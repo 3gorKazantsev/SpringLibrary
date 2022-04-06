@@ -1,5 +1,6 @@
 package org.egorkazantsev.library.repository;
 
+import org.egorkazantsev.library.dto.InsertOrderDto;
 import org.egorkazantsev.library.dto.OrderDto;
 import org.egorkazantsev.library.jooq.generated.Tables;
 import org.egorkazantsev.library.jooq.generated.tables.Author;
@@ -79,7 +80,8 @@ public class OrderRepository {
     }
 
     // insert
-    public UUID insertOrder(org.egorkazantsev.library.jooq.generated.tables.pojos.BookOrder order) {
+    public UUID insertOrder(InsertOrderDto orderDto) {
+        var order = orderDto.convertToBookOrder();
         orderDao.insert(order);
         return order.getId();
     }
@@ -90,7 +92,8 @@ public class OrderRepository {
     }
 
     // update
-    public UUID updateOrder(org.egorkazantsev.library.jooq.generated.tables.pojos.BookOrder order) {
+    public UUID updateOrder(InsertOrderDto orderDto) {
+        var order = orderDto.convertToBookOrder();
         orderDao.update(order);
         return order.getId();
     }

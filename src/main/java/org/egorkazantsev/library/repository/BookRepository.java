@@ -1,6 +1,6 @@
 package org.egorkazantsev.library.repository;
 
-import org.egorkazantsev.library.dto.book.BookDto;
+import org.egorkazantsev.library.dto.BookDto;
 import org.egorkazantsev.library.jooq.generated.Tables;
 import org.egorkazantsev.library.jooq.generated.tables.Author;
 import org.egorkazantsev.library.jooq.generated.tables.Book;
