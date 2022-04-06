@@ -25,6 +25,7 @@ public class AuthorService {
 
     // get by id
     public ResponseEntity<Author> getAuthorById(UUID authorId) {
+        Author author = authorRepository.findAuthorById(authorId);
         return new ResponseEntity<>(
                 authorRepository.findAuthorById(authorId),
                 HttpStatus.OK);

@@ -2,8 +2,6 @@ package org.egorkazantsev.library.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.egorkazantsev.library.dto.AuthorDto;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.egorkazantsev.library.jooq.generated.tables.records.AuthorRecord;
 import org.egorkazantsev.library.jooq.generated.tables.records.BookRecord;
 
