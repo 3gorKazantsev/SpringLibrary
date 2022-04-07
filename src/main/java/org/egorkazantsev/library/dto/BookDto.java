@@ -1,14 +1,14 @@
 package org.egorkazantsev.library.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.egorkazantsev.library.jooq.generated.tables.records.AuthorRecord;
-import org.egorkazantsev.library.jooq.generated.tables.records.BookRecord;
 
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BookDto {
 
     private UUID id;
@@ -18,12 +18,4 @@ public class BookDto {
     private String genre;
     private Integer stock;
 
-    public BookDto(BookRecord book, AuthorRecord author) {
-        this.id = book.getId();
-        this.title = book.getTitle();
-        this.author = author.into(AuthorDto.class);
-        this.description = book.getDescription();
-        this.genre = book.getGenre();
-        this.stock = book.getStock();
-    }
 }
