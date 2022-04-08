@@ -2,12 +2,10 @@ package org.egorkazantsev.library.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class BookDto {
 
@@ -18,4 +16,7 @@ public class BookDto {
     private String genre;
     private Integer stock;
 
+    public BookDto() {
+        this.author = new AuthorDto();
+    }
 }

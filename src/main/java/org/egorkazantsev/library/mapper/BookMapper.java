@@ -5,6 +5,7 @@ import org.egorkazantsev.library.dto.BookDto;
 import org.egorkazantsev.library.jooq.generated.Tables;
 import org.egorkazantsev.library.jooq.generated.tables.Author;
 import org.egorkazantsev.library.jooq.generated.tables.Book;
+import org.egorkazantsev.library.jooq.generated.tables.records.BookRecord;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,8 @@ public class BookMapper implements RecordMapper<Record, BookDto> {
 
     @Override
     public BookDto map(Record record) {
-        BookDto bookDto = new BookDto(
+
+        return new BookDto(
                 record.getValue(BOOK.ID),
                 record.getValue(BOOK.TITLE),
                 new AuthorDto(
@@ -28,7 +30,16 @@ public class BookMapper implements RecordMapper<Record, BookDto> {
                 record.getValue(BOOK.GENRE),
                 record.getValue(BOOK.STOCK)
         );
+    }
 
-        return bookDto;
+    public org.egorkazantsev.library.jooq.generated.tables.pojos.Book toBookPojo(BookDto bookDto) {
+        return new org.egorkazantsev.library.jooq.generated.tables.pojos.Book(
+                bookDto.getId(),
+                bookDto.getTitle(),
+                bookDto.getAuthor().getId(),
+                bookDto.getDescription(),
+                bookDto.getGenre(),
+                bookDto.getStock()
+        );
     }
 }

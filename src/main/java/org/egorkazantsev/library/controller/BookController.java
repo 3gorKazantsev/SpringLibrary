@@ -29,8 +29,8 @@ public class BookController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addBook(@RequestBody Book book) {
-        return bookService.addBook(book);
+    public ResponseEntity<UUID> addBook(@RequestBody BookDto bookDto) {
+        return bookService.addBook(bookDto);
     }
 
     @DeleteMapping("/delete/{bookId}")
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateBook(@RequestBody Book book) {
-        return bookService.updateBook(book);
+    public ResponseEntity<UUID> updateBook(@RequestBody BookDto bookDto) {
+        return bookService.updateBook(bookDto);
     }
 }

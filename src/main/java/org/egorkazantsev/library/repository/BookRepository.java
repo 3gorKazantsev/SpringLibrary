@@ -1,10 +1,7 @@
 package org.egorkazantsev.library.repository;
 
 import org.egorkazantsev.library.dto.BookDto;
-import org.egorkazantsev.library.jooq.generated.Tables;
-import org.egorkazantsev.library.jooq.generated.tables.Author;
 import org.egorkazantsev.library.jooq.generated.tables.daos.BookDao;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
 import org.egorkazantsev.library.mapper.BookMapper;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -57,12 +54,8 @@ public class BookRepository {
     }
 
     // insert
-    public UUID insertBook(Book book /*BookDto bookDto*/) {
-//        dslContext
-//                .insertInto(BOOK,
-//                        )
-//                .values(bookDto)
-//        return book.getId();
+    public UUID insertBook(BookDto bookDto) {
+        var book = bookMapper.toBookPojo(bookDto);
         bookDao.insert(book);
         return book.getId();
     }
@@ -73,7 +66,8 @@ public class BookRepository {
     }
 
     // update
-    public UUID updateBook(org.egorkazantsev.library.jooq.generated.tables.pojos.Book book) {
+    public UUID updateBook(BookDto bookDto) {
+        var book = bookMapper.toBookPojo(bookDto);
         bookDao.update(book);
         return book.getId();
     }

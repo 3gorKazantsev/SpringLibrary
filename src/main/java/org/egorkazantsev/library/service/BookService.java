@@ -32,8 +32,8 @@ public class BookService {
     }
 
     // add      TODO проверка существует ли уже такая запись с таким же ид
-    public ResponseEntity<UUID> addBook(Book book) {
-        UUID bookId = bookRepository.insertBook(book);
+    public ResponseEntity<UUID> addBook(BookDto bookDto) {
+        UUID bookId = bookRepository.insertBook(bookDto);
         return new ResponseEntity<>(bookId, HttpStatus.OK);
     }
 
@@ -44,9 +44,9 @@ public class BookService {
     }
 
     // update
-    public ResponseEntity<UUID> updateBook(Book book) {
+    public ResponseEntity<UUID> updateBook(BookDto bookDto) {
         return new ResponseEntity<>(
-                bookRepository.updateBook(book),
+                bookRepository.updateBook(bookDto),
                 HttpStatus.OK);
     }
 }
