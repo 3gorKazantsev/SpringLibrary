@@ -16,7 +16,4 @@ public class BookDto {
     private String genre;
     private Integer stock;
 
-    public BookDto() {
-        this.author = new AuthorDto();
-    }
 }

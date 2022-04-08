@@ -1,9 +1,7 @@
 package org.egorkazantsev.library.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.egorkazantsev.library.dto.InsertOrderDto;
 import org.egorkazantsev.library.dto.OrderDto;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.BookOrder;
 import org.egorkazantsev.library.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addOrder(@RequestBody InsertOrderDto orderDto) {
+    public ResponseEntity<UUID> addOrder(@RequestBody OrderDto orderDto) {
         return orderService.addOrder(orderDto);
     }
 
@@ -40,7 +38,7 @@ public class OrderController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateOrder(@RequestBody InsertOrderDto orderDto) {
+    public ResponseEntity<UUID> updateOrder(@RequestBody OrderDto orderDto) {
         return orderService.updateOrder(orderDto);
     }
 }
