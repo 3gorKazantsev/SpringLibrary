@@ -1,23 +1,29 @@
 package org.egorkazantsev.library.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.dto.BookForOrderDto;
 import org.egorkazantsev.library.dto.OrderDto;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.BookOrder;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Reader;
+import org.egorkazantsev.library.mapper.converter.PeriodConverter;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.jooq.types.YearToSecond;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.Period;
 
 import static org.egorkazantsev.library.jooq.generated.Tables.*;
 
 @Component
+@RequiredArgsConstructor
 public class OrderMapper implements RecordMapper<Record, OrderDto> {
 
+    private final PeriodConverter periodConverter;
+
     @Override
+    @Nullable
     public OrderDto map(Record record) {
         return new OrderDto(
                 record.getValue(BOOK_ORDER.ID),
@@ -33,7 +39,7 @@ public class OrderMapper implements RecordMapper<Record, OrderDto> {
                         record.getValue(AUTHOR.FULL_NAME)
                 ),
                 LocalDate.from(record.getValue(BOOK_ORDER.BORROWING_DATE)),
-                record.getValue(BOOK_ORDER.PERIOD).getDays()
+                record.getValue(BOOK_ORDER.PERIOD, periodConverter)
         );
     }
 
@@ -44,7 +50,7 @@ public class OrderMapper implements RecordMapper<Record, OrderDto> {
                 orderDto.getReader() == null ? null : orderDto.getReader().getId(),
                 orderDto.getBook() == null ? null : orderDto.getBook().getId(),
                 orderDto.getBorrowingDate(),
-                orderDto.getPeriod() == null ? null : YearToSecond.valueOf(Period.ofDays(orderDto.getPeriod()))
+                orderDto.getPeriod() == null ? null : periodConverter.to(orderDto.getPeriod())
         );
     }
 }

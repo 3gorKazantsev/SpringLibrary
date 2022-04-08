@@ -5,6 +5,7 @@ import org.egorkazantsev.library.dto.BookDto;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import static org.egorkazantsev.library.jooq.generated.Tables.*;
@@ -13,6 +14,7 @@ import static org.egorkazantsev.library.jooq.generated.Tables.*;
 public class BookMapper implements RecordMapper<Record, BookDto> {
 
     @Override
+    @Nullable
     public BookDto map(Record record) {
         return new BookDto(
                 record.getValue(BOOK.ID),
