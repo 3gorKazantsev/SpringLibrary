@@ -1,6 +1,8 @@
 package org.egorkazantsev.library.service;
 
 import lombok.RequiredArgsConstructor;
+import org.egorkazantsev.library.exception.EntityIllegalArgumentException;
+import org.egorkazantsev.library.exception.EntityNotFoundException;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.egorkazantsev.library.repository.AuthorRepository;
 import org.springframework.http.HttpStatus;
@@ -17,24 +19,25 @@ public class AuthorService {
     private final AuthorRepository authorRepository;
 
     // get all
-    public ResponseEntity<List<Author>> getAllAuthors() {
-        return new ResponseEntity<>(
-                authorRepository.findAllAuthors(),
-                HttpStatus.OK);
+    public List<Author> getAllAuthors() {
+        return authorRepository.findAllAuthors();
     }
 
     // get by id
-    public ResponseEntity<Author> getAuthorById(UUID authorId) {
+    public Author getAuthorById(UUID authorId) {
+        if (authorId == null)
+            throw new EntityIllegalArgumentException("Author ID cannot be null");
+
         Author author = authorRepository.findAuthorById(authorId);
-        return new ResponseEntity<>(
-                authorRepository.findAuthorById(authorId),
-                HttpStatus.OK);
+        if (author == null)
+            throw new EntityNotFoundException(Author.class.getTypeName(), authorId);
+
+        return author;
     }
 
     // add
-    public ResponseEntity<UUID> addAuthor(Author author) {
-        UUID authorId = authorRepository.insertAuthor(author);
-        return new ResponseEntity<>(authorId, HttpStatus.OK);
+    public UUID addAuthor(Author author) {
+        return authorRepository.insertAuthor(author);
     }
 
     // delete by id

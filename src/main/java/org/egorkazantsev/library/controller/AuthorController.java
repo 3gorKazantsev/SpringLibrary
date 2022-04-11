@@ -1,6 +1,7 @@
 package org.egorkazantsev.library.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.egorkazantsev.library.exception.EntityNotFoundException;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.egorkazantsev.library.service.AuthorService;
 import org.springframework.http.HttpStatus;
@@ -18,17 +19,17 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Author>> getAllAuthors() {
+    public List<Author> getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
     @GetMapping("/{authorId}")
-    public ResponseEntity<Author> getAuthorById(@PathVariable UUID authorId) {
+    public Author getAuthorById(@PathVariable UUID authorId) {
         return authorService.getAuthorById(authorId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addAuthor(@RequestBody Author author) {
+    public UUID addAuthor(@RequestBody Author author) {
         return authorService.addAuthor(author);
     }
 
