@@ -2,51 +2,108 @@ package org.egorkazantsev.library.service;
 
 import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.dto.BookDto;
+import org.egorkazantsev.library.exception.EntityAlreadyExistsException;
+import org.egorkazantsev.library.exception.EntityIllegalArgumentException;
+import org.egorkazantsev.library.exception.EntityNotFoundException;
+import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
+import org.egorkazantsev.library.repository.AuthorRepository;
 import org.egorkazantsev.library.repository.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
 public class BookService {
 
     private final BookRepository bookRepository;
+    private final AuthorRepository authorRepository;
 
     // get all
     public ResponseEntity<List<BookDto>> getAllBooks() {
-        return new ResponseEntity<>(
-                bookRepository.findAllBooks(),
-                HttpStatus.OK);
+        // пустая ли коллекция
+        var books = bookRepository.findAllBooks();
+        if (books.isEmpty())
+            return new ResponseEntity<>(books, HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(books, HttpStatus.OK);
     }
 
     // get by id
-    public ResponseEntity<BookDto> getBookById(UUID bookId) {
-        return new ResponseEntity<>(
-                bookRepository.findBookById(bookId),
-                HttpStatus.OK);
+    public BookDto getBookById(UUID bookId) {
+        if (bookId == null)
+            throw new EntityIllegalArgumentException("Book ID cannot be null");
+
+        // есть ли запись указанным ИД
+        BookDto book = bookRepository.findBookById(bookId);
+        if (book == null)
+            throw new EntityNotFoundException(Book.class.getSimpleName(), bookId);
+
+        return book;
     }
 
-    // add      TODO проверка существует ли уже такая запись с таким же ид
-    public ResponseEntity<UUID> addBook(BookDto bookDto) {
-        UUID bookId = bookRepository.insertBook(bookDto);
-        return new ResponseEntity<>(bookId, HttpStatus.OK);
+    // add
+    public UUID addBook(BookDto bookDto) {
+        if (bookDto == null)
+            throw new EntityIllegalArgumentException("BookDto cannot be null");
+
+        // не пустой ли этоn объект
+        boolean attrsIsNull = Stream.of(
+                        bookDto.getId(),
+                        bookDto.getTitle(),
+                        bookDto.getAuthor(),
+                        bookDto.getDescription(),
+                        bookDto.getGenre(),
+                        bookDto.getStock())
+                .allMatch(Objects::isNull);
+        if (attrsIsNull)
+            throw new EntityIllegalArgumentException("BookDto attributes cannot be null");
+
+        // существует ли указанный автор
+        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+        if (author == null)
+            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+
+        // существует ли уже запись с таким же ИД
+        if (bookDto.getId() != null) {
+            BookDto existedBook = bookRepository.findBookById(bookDto.getId());
+            if (existedBook != null)
+                throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
+        }
+
+        return bookRepository.insertBook(bookDto);
     }
 
-    // delete by id     TODO сделать проверку удалилось ли и только потом отправлять хттп статус
+    // delete by id
     public HttpStatus deleteBook(UUID bookId) {
+        // те же проверки, что и в get by id
+        getBookById(bookId);
         bookRepository.deleteBookById(bookId);
         return HttpStatus.OK;
     }
 
     // update
-    public ResponseEntity<UUID> updateBook(BookDto bookDto) {
-        return new ResponseEntity<>(
-                bookRepository.updateBook(bookDto),
-                HttpStatus.OK);
+    public UUID updateBook(BookDto bookDto) {
+        if (bookDto == null)
+            throw new EntityIllegalArgumentException("BookDto cannot be null");
+        // ИД не null?
+        if (bookDto.getId() == null)
+            throw new EntityIllegalArgumentException("Book ID cannot be null");
+        // уже существует объект с таким ИД
+        BookDto existedBook = bookRepository.findBookById(bookDto.getId());
+        if (existedBook != null)
+            throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
+        // существует ли указанный автор
+        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+        if (author == null)
+            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+
+        return bookRepository.updateBook(bookDto);
     }
 }

@@ -19,7 +19,7 @@ public class AuthorController {
     private final AuthorService authorService;
 
     @GetMapping("/all")
-    public List<Author> getAllAuthors() {
+    public ResponseEntity<List<Author>> getAllAuthors() {
         return authorService.getAllAuthors();
     }
 
@@ -39,7 +39,7 @@ public class AuthorController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateAuthor(@RequestBody Author author) {
+    public UUID updateAuthor(@RequestBody Author author) {
         return authorService.updateAuthor(author);
     }
 }

@@ -16,6 +16,6 @@ public class EntityAlreadyExistsException extends LibraryException {
 
     private static String formatMessage(String type, Object id) {
         checkTypeAndId(type, id);
-        return String.format("%s with ID %s already exists", type, id);
+        return String.format("Entity '%s' with ID '%s' already exists", type, id);
     }
 }

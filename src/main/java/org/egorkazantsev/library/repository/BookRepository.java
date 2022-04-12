@@ -50,7 +50,7 @@ public class BookRepository {
                 .where(BOOK.ID.eq(id))
                 .fetchOne();
 
-        return result.map(bookMapper);
+        return result != null ? result.map(bookMapper) : null;
     }
 
     // insert

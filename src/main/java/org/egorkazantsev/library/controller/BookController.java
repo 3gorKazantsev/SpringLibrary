@@ -24,12 +24,12 @@ public class BookController {
     }
 
     @GetMapping("/{bookId}")
-    public ResponseEntity<BookDto> getBookById(@PathVariable UUID bookId) {
+    public BookDto getBookById(@PathVariable UUID bookId) {
         return bookService.getBookById(bookId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addBook(@RequestBody BookDto bookDto) {
+    public UUID addBook(@RequestBody BookDto bookDto) {
         return bookService.addBook(bookDto);
     }
 
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateBook(@RequestBody BookDto bookDto) {
+    public UUID updateBook(@RequestBody BookDto bookDto) {
         return bookService.updateBook(bookDto);
     }
 }
