@@ -93,7 +93,6 @@ public class BookService {
         return HttpStatus.OK;
     }
 
-    // todo нельзя обновлять поля не указав автора
     // update
     public UUID updateBook(BookDto bookDto) {
         if (bookDto == null)
@@ -109,10 +108,12 @@ public class BookService {
             throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
 
         // существует ли указанный автор
-        if (bookDto.getAuthor().getId() != null) {
-            Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
-            if (author == null)
-                throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+        if (bookDto.getAuthor() != null) {
+            if (bookDto.getAuthor().getId() != null) {
+                Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+                if (author == null)
+                    throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+            }
         }
 
         // остаток меньше нуля ?

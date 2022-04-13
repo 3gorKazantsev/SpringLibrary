@@ -99,7 +99,6 @@ public class OrderService {
     }
 
     // todo не та ошибка при вводе неверного ид заказа
-    // todo нельзя изменять поля, не указав читателя и/или книгу
     // update
     public UUID updateOrder(OrderDto orderDto) {
         if (orderDto == null)
@@ -115,17 +114,21 @@ public class OrderService {
             throw new EntityAlreadyExistsException(BookOrder.class.getSimpleName(), orderDto.getId());
 
         // существует ли указанный читатель
-        if (orderDto.getReader().getId() != null) {
-            Reader reader = readerRepository.findReaderById(orderDto.getReader().getId());
-            if (reader == null)
-                throw new EntityNotFoundException(Reader.class.getSimpleName(), orderDto.getReader().getId());
+        if (orderDto.getReader() != null) {
+            if (orderDto.getReader().getId() != null) {
+                Reader reader = readerRepository.findReaderById(orderDto.getReader().getId());
+                if (reader == null)
+                    throw new EntityNotFoundException(Reader.class.getSimpleName(), orderDto.getReader().getId());
+            }
         }
 
         // существует ли указанная книга
-        if (orderDto.getBook().getId() != null) {
-            BookDto book = bookRepository.findBookById(orderDto.getBook().getId());
-            if (book == null)
-                throw new EntityNotFoundException(Book.class.getSimpleName(), orderDto.getBook().getId());
+        if (orderDto.getBook() != null) {
+            if (orderDto.getBook().getId() != null) {
+                BookDto book = bookRepository.findBookById(orderDto.getBook().getId());
+                if (book == null)
+                    throw new EntityNotFoundException(Book.class.getSimpleName(), orderDto.getBook().getId());
+            }
         }
 
         return orderRepository.updateOrder(orderDto);

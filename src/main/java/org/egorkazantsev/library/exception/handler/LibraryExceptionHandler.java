@@ -2,7 +2,6 @@ package org.egorkazantsev.library.exception.handler;
 
 import org.egorkazantsev.library.exception.ErrorEntity;
 import org.egorkazantsev.library.exception.LibraryException;
-import org.postgresql.util.PSQLException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +32,7 @@ public class LibraryExceptionHandler {
         }
 
         // TODO возможно стоит переделать
+        // обработка PSQL ошибок
         if (ex instanceof DataIntegrityViolationException) {
             defaultMessage = ex.getClass().getName();
             error.setStatus(HttpStatus.BAD_REQUEST.value());
