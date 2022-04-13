@@ -40,7 +40,7 @@ public class BookService {
         if (bookId == null)
             throw new EntityIllegalArgumentException("Book ID cannot be null");
 
-        // есть ли запись указанным ИД
+        // есть ли запись с указанным ИД
         BookDto book = bookRepository.findBookById(bookId);
         if (book == null)
             throw new EntityNotFoundException(Book.class.getSimpleName(), bookId);
@@ -48,27 +48,22 @@ public class BookService {
         return book;
     }
 
-    // add
+    // add todo разобраться почему ошибка идет не туда
     public UUID addBook(BookDto bookDto) {
         if (bookDto == null)
             throw new EntityIllegalArgumentException("BookDto cannot be null");
 
-        // не пустой ли этоn объект
+        // не пустой ли этот объект
         boolean attrsIsNull = Stream.of(
-                        bookDto.getId(),
-                        bookDto.getTitle(),
-                        bookDto.getAuthor(),
-                        bookDto.getDescription(),
-                        bookDto.getGenre(),
-                        bookDto.getStock())
-                .allMatch(Objects::isNull);
+                bookDto.getId(),
+                bookDto.getTitle(),
+                bookDto.getAuthor(),
+                bookDto.getDescription(),
+                bookDto.getGenre(),
+                bookDto.getStock()
+        ).allMatch(Objects::isNull);
         if (attrsIsNull)
             throw new EntityIllegalArgumentException("BookDto attributes cannot be null");
-
-        // существует ли указанный автор
-        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
-        if (author == null)
-            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
 
         // существует ли уже запись с таким же ИД
         if (bookDto.getId() != null) {
@@ -76,6 +71,11 @@ public class BookService {
             if (existedBook != null)
                 throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
         }
+
+        // существует ли указанный автор
+        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+        if (author == null)
+            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
 
         return bookRepository.insertBook(bookDto);
     }
@@ -92,13 +92,16 @@ public class BookService {
     public UUID updateBook(BookDto bookDto) {
         if (bookDto == null)
             throw new EntityIllegalArgumentException("BookDto cannot be null");
-        // ИД не null?
+
+        // ИД не null ?
         if (bookDto.getId() == null)
             throw new EntityIllegalArgumentException("Book ID cannot be null");
-        // уже существует объект с таким ИД
+
+        // уже существует объект с таким ИД ?
         BookDto existedBook = bookRepository.findBookById(bookDto.getId());
         if (existedBook != null)
             throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
+
         // существует ли указанный автор
         Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
         if (author == null)

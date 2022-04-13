@@ -23,12 +23,12 @@ public class ReaderController {
     }
 
     @GetMapping("/{readerId}")
-    public ResponseEntity<Reader> getReaderById(@PathVariable UUID readerId) {
+    public Reader getReaderById(@PathVariable UUID readerId) {
         return readerService.getReaderById(readerId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addReader(@RequestBody Reader reader) {
+    public UUID addReader(@RequestBody Reader reader) {
         return readerService.addReader(reader);
     }
 
@@ -38,7 +38,7 @@ public class ReaderController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateReader(@RequestBody Reader reader) {
+    public UUID updateReader(@RequestBody Reader reader) {
         return readerService.updateReader(reader);
     }
 }

@@ -23,12 +23,12 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderDto> getOrderById(@PathVariable UUID orderId) {
+    public OrderDto getOrderById(@PathVariable UUID orderId) {
         return orderService.getOrderById(orderId);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UUID> addOrder(@RequestBody OrderDto orderDto) {
+    public UUID addOrder(@RequestBody OrderDto orderDto) {
         return orderService.addOrder(orderDto);
     }
 
@@ -38,7 +38,7 @@ public class OrderController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UUID> updateOrder(@RequestBody OrderDto orderDto) {
+    public UUID updateOrder(@RequestBody OrderDto orderDto) {
         return orderService.updateOrder(orderDto);
     }
 }

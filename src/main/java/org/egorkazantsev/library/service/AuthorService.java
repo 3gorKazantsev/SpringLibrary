@@ -38,7 +38,7 @@ public class AuthorService {
         if (authorId == null)
             throw new EntityIllegalArgumentException("Author ID cannot be null");
 
-        // есть ли запись указанным ИД
+        // есть ли запись с указанным ИД
         Author author = authorRepository.findAuthorById(authorId);
         if (author == null)
             throw new EntityNotFoundException(Author.class.getSimpleName(), authorId);
@@ -51,7 +51,7 @@ public class AuthorService {
         if (author == null)
             throw new EntityIllegalArgumentException("Author cannot be null");
 
-        // не пустой ли этоn объект
+        // не пустой ли этот объект
         boolean attrsIsNull = Stream.of(author.getId(), author.getFullName(), author.getBio()).allMatch(Objects::isNull);
         if (attrsIsNull)
             throw new EntityIllegalArgumentException("Author attributes cannot be null");
@@ -81,7 +81,7 @@ public class AuthorService {
         // ИД не null?
         if (author.getId() == null)
             throw new EntityIllegalArgumentException("Author ID cannot be null");
-        // уже существует объект с таким ИД
+        // уже существует объект с таким ИД ?
         Author existedAuthor = authorRepository.findAuthorById(author.getId());
         if (existedAuthor == null)
             throw new EntityNotFoundException(Author.class.getSimpleName());
