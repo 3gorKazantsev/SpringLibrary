@@ -81,7 +81,7 @@ public class AuthorService {
         // ИД не null?
         if (author.getId() == null)
             throw new EntityIllegalArgumentException("Author ID cannot be null");
-        // уже существует объект с таким ИД ?
+        // существует ли объект с таким ИД ?
         Author existedAuthor = authorRepository.findAuthorById(author.getId());
         if (existedAuthor == null)
             throw new EntityNotFoundException(Author.class.getSimpleName());

@@ -48,7 +48,7 @@ public class BookService {
         return book;
     }
 
-    // add todo разобраться почему ошибка идет не туда
+    // add
     public UUID addBook(BookDto bookDto) {
         if (bookDto == null)
             throw new EntityIllegalArgumentException("BookDto cannot be null");
@@ -72,10 +72,15 @@ public class BookService {
                 throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
         }
 
+        // todo если указывать null как автора, то сообщение верное, а код нет
         // существует ли указанный автор
         Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
         if (author == null)
             throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+
+        // остаток меньше нуля ?
+        if (bookDto.getStock() < 0)
+            throw new EntityIllegalArgumentException("Stock cannot be less than 0");
 
         return bookRepository.insertBook(bookDto);
     }
@@ -88,6 +93,7 @@ public class BookService {
         return HttpStatus.OK;
     }
 
+    // todo нельзя обновлять поля не указав автора
     // update
     public UUID updateBook(BookDto bookDto) {
         if (bookDto == null)
@@ -97,15 +103,21 @@ public class BookService {
         if (bookDto.getId() == null)
             throw new EntityIllegalArgumentException("Book ID cannot be null");
 
-        // уже существует объект с таким ИД ?
+        // существует ли объект с таким ИД ?
         BookDto existedBook = bookRepository.findBookById(bookDto.getId());
-        if (existedBook != null)
+        if (existedBook == null)
             throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
 
         // существует ли указанный автор
-        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
-        if (author == null)
-            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+        if (bookDto.getAuthor().getId() != null) {
+            Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+            if (author == null)
+                throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+        }
+
+        // остаток меньше нуля ?
+        if (bookDto.getStock() < 0)
+            throw new EntityIllegalArgumentException("Stock cannot be less than 0");
 
         return bookRepository.updateBook(bookDto);
     }

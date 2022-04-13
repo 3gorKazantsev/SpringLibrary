@@ -27,9 +27,9 @@ public class ReaderService {
         // пустая ли коллекция
         var readers = readerRepository.findAllReaders();
         if (readers.isEmpty())
-            return new ResponseEntity<>(readers, HttpStatus.OK);
-        else
             return new ResponseEntity<>(readers, HttpStatus.NO_CONTENT);
+        else
+            return new ResponseEntity<>(readers, HttpStatus.OK);
     }
 
     // get by id
@@ -77,13 +77,15 @@ public class ReaderService {
     public UUID updateReader(Reader reader) {
         if (reader == null)
             throw new EntityIllegalArgumentException("Reader cannot be null");
+
         // ИД не null?
         if (reader.getId() == null)
             throw new EntityIllegalArgumentException("Reader ID cannot be null");
-        // уже существует объект с таким ИД ?
+
+        // есть ли объект с таким ИД ?
         Reader existedReader = readerRepository.findReaderById(reader.getId());
         if (existedReader == null)
-            throw new EntityNotFoundException(Reader.class.getSimpleName());
+            throw new EntityNotFoundException(Reader.class.getSimpleName(), reader.getId());
 
         return readerRepository.updateReader(reader);
     }

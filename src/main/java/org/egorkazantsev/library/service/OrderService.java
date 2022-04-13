@@ -39,6 +39,7 @@ public class OrderService {
             return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
+    // todo если указать не верный ид не кидается нужная ошибка
     // get by id
     public OrderDto getOrderById(UUID orderId) {
         if (orderId == null)
@@ -52,7 +53,7 @@ public class OrderService {
         return order;
     }
 
-    // add todo разобраться почему ошибка идет не туда
+    // add
     public UUID addOrder(OrderDto orderDto) {
         if (orderDto == null)
             throw new EntityIllegalArgumentException("OrderDto cannot be null");
@@ -88,6 +89,7 @@ public class OrderService {
         return orderRepository.insertOrder(orderDto);
     }
 
+    // todo не та ошибка при вводе неверного ид
     // delete by id
     public HttpStatus deleteOrder(UUID orderId) {
         // те же проверки, что и в get by id
@@ -96,6 +98,8 @@ public class OrderService {
         return HttpStatus.OK;
     }
 
+    // todo не та ошибка при вводе неверного ид заказа
+    // todo нельзя изменять поля, не указав читателя и/или книгу
     // update
     public UUID updateOrder(OrderDto orderDto) {
         if (orderDto == null)
@@ -105,20 +109,24 @@ public class OrderService {
         if (orderDto.getId() == null)
             throw new EntityIllegalArgumentException("Order ID cannot be null");
 
-        // уже существует объект с таким ИД ?
+        // существует ли объект с таким ИД ?
         OrderDto existedOrder = orderRepository.findOrderById(orderDto.getId());
-        if (existedOrder != null)
+        if (existedOrder == null)
             throw new EntityAlreadyExistsException(BookOrder.class.getSimpleName(), orderDto.getId());
 
         // существует ли указанный читатель
-        Reader reader = readerRepository.findReaderById(orderDto.getReader().getId());
-        if (reader == null)
-            throw new EntityNotFoundException(Reader.class.getSimpleName(), orderDto.getReader().getId());
+        if (orderDto.getReader().getId() != null) {
+            Reader reader = readerRepository.findReaderById(orderDto.getReader().getId());
+            if (reader == null)
+                throw new EntityNotFoundException(Reader.class.getSimpleName(), orderDto.getReader().getId());
+        }
 
         // существует ли указанная книга
-        BookDto book = bookRepository.findBookById(orderDto.getBook().getId());
-        if (book == null)
-            throw new EntityNotFoundException(Book.class.getSimpleName(), orderDto.getBook().getId());
+        if (orderDto.getBook().getId() != null) {
+            BookDto book = bookRepository.findBookById(orderDto.getBook().getId());
+            if (book == null)
+                throw new EntityNotFoundException(Book.class.getSimpleName(), orderDto.getBook().getId());
+        }
 
         return orderRepository.updateOrder(orderDto);
     }
