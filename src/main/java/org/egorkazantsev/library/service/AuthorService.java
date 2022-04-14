@@ -4,17 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.exception.EntityAlreadyExistsException;
 import org.egorkazantsev.library.exception.EntityIllegalArgumentException;
 import org.egorkazantsev.library.exception.EntityNotFoundException;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
 import org.egorkazantsev.library.repository.AuthorRepository;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Author;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.stream.Stream;
 
 @Service

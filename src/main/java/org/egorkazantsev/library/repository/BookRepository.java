@@ -1,8 +1,8 @@
 package org.egorkazantsev.library.repository;
 
 import org.egorkazantsev.library.dto.BookDto;
-import org.egorkazantsev.library.jooq.generated.tables.daos.BookDao;
 import org.egorkazantsev.library.mapper.BookMapper;
+import org.egorkazantsev.library.repository.generated.jooq.tables.daos.BookDao;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -11,10 +11,11 @@ import org.jooq.impl.DefaultDSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import static org.egorkazantsev.library.jooq.generated.Tables.*;
-
 import java.util.List;
 import java.util.UUID;
+
+import static org.egorkazantsev.library.repository.generated.jooq.Tables.AUTHOR;
+import static org.egorkazantsev.library.repository.generated.jooq.Tables.BOOK;
 
 @Repository
 public class BookRepository {

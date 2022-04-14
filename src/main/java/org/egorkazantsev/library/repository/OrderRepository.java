@@ -1,10 +1,8 @@
 package org.egorkazantsev.library.repository;
 
 import org.egorkazantsev.library.dto.OrderDto;
-import org.egorkazantsev.library.jooq.generated.tables.BookOrder;
-import org.egorkazantsev.library.jooq.generated.tables.daos.BookOrderDao;
-import org.egorkazantsev.library.jooq.generated.tables.records.BookOrderRecord;
 import org.egorkazantsev.library.mapper.OrderMapper;
+import org.egorkazantsev.library.repository.generated.jooq.tables.daos.BookOrderDao;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
-import static org.egorkazantsev.library.jooq.generated.Tables.*;
+import static org.egorkazantsev.library.repository.generated.jooq.Tables.*;
 
 @Repository
 public class OrderRepository {

@@ -100,7 +100,7 @@
                 <artifactId>jooq-codegen-maven</artifactId>
                 <version>3.16.5</version>
 
-                <!-- The plugin should hook into the generate goal -->
+                <!-- The plugin should hook into the generated goal -->
                 <executions>
                     <execution>
                         <goals>
@@ -146,8 +146,8 @@
                             <fluentSetters>true</fluentSetters>
                         </generate>
                         <target>
-                            <packageName>org.egorkazantsev.library.jooq.generated</packageName>
-                            <directory>target/generated-sources/jooq</directory>
+                            <packageName>org.egorkazantsev.library.repository.generated.jooq</packageName>
+                            <directory>src/main/java</directory>
                         </target>
                     </generator>
                 </configuration>

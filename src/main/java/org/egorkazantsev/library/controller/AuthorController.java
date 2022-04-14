@@ -1,8 +1,7 @@
 package org.egorkazantsev.library.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.egorkazantsev.library.exception.EntityNotFoundException;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Author;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Author;
 import org.egorkazantsev.library.service.AuthorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

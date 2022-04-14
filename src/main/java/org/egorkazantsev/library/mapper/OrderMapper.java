@@ -3,18 +3,17 @@ package org.egorkazantsev.library.mapper;
 import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.dto.BookForOrderDto;
 import org.egorkazantsev.library.dto.OrderDto;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.BookOrder;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Reader;
 import org.egorkazantsev.library.mapper.converter.PeriodConverter;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.BookOrder;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Reader;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-import static org.egorkazantsev.library.jooq.generated.Tables.*;
+import static org.egorkazantsev.library.repository.generated.jooq.Tables.*;
 
 @Component
 @RequiredArgsConstructor

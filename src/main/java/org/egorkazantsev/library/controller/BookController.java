@@ -2,7 +2,6 @@ package org.egorkazantsev.library.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.egorkazantsev.library.dto.BookDto;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
 import org.egorkazantsev.library.service.BookService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

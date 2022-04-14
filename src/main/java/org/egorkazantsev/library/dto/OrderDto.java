@@ -2,7 +2,7 @@ package org.egorkazantsev.library.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Reader;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Reader;
 
 import java.time.LocalDate;
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package org.egorkazantsev.library.repository;
 
-import org.egorkazantsev.library.jooq.generated.tables.daos.ReaderDao;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Reader;
+import org.egorkazantsev.library.repository.generated.jooq.tables.daos.ReaderDao;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Reader;
 import org.jooq.DSLContext;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;

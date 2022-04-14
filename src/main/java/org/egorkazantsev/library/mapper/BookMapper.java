@@ -2,13 +2,13 @@ package org.egorkazantsev.library.mapper;
 
 import org.egorkazantsev.library.dto.AuthorDto;
 import org.egorkazantsev.library.dto.BookDto;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Book;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Book;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import static org.egorkazantsev.library.jooq.generated.Tables.*;
+import static org.egorkazantsev.library.repository.generated.jooq.Tables.*;
 
 @Component
 public class BookMapper implements RecordMapper<Record, BookDto> {

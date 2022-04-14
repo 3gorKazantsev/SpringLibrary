@@ -1,7 +1,7 @@
 package org.egorkazantsev.library.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.egorkazantsev.library.jooq.generated.tables.pojos.Reader;
+import org.egorkazantsev.library.repository.generated.jooq.tables.pojos.Reader;
 import org.egorkazantsev.library.service.ReaderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
