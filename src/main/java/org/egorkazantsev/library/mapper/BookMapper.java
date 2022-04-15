@@ -37,7 +37,7 @@ public class BookMapper implements RecordMapper<Record, BookDto> {
                 bookDto.getAuthor() == null ? null : bookDto.getAuthor().getId(),
                 bookDto.getDescription(),
                 bookDto.getGenre(),
-                bookDto.getStock()
+                bookDto.getStock() == null ? null : bookDto.getStock()
         );
     }
 }

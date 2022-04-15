@@ -72,11 +72,12 @@ public class BookService {
                 throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
         }
 
-        // todo если указывать null как автора, то сообщение верное, а код нет
         // существует ли указанный автор
-        Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
-        if (author == null)
-            throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+        if (bookDto.getAuthor().getId() != null) {
+            Author author = authorRepository.findAuthorById(bookDto.getAuthor().getId());
+            if (author == null)
+                throw new EntityNotFoundException(Author.class.getSimpleName(), bookDto.getAuthor().getId());
+        }
 
         // остаток меньше нуля ?
         if (bookDto.getStock() < 0)
@@ -105,7 +106,7 @@ public class BookService {
         // существует ли объект с таким ИД ?
         BookDto existedBook = bookRepository.findBookById(bookDto.getId());
         if (existedBook == null)
-            throw new EntityAlreadyExistsException(Book.class.getSimpleName(), bookDto.getId());
+            throw new EntityNotFoundException(Book.class.getSimpleName(), bookDto.getId());
 
         // существует ли указанный автор
         if (bookDto.getAuthor() != null) {
@@ -117,8 +118,9 @@ public class BookService {
         }
 
         // остаток меньше нуля ?
-        if (bookDto.getStock() < 0)
-            throw new EntityIllegalArgumentException("Stock cannot be less than 0");
+        if (bookDto.getStock() != null)
+            if (bookDto.getStock() < 0)
+                throw new EntityIllegalArgumentException("Stock cannot be less than 0");
 
         return bookRepository.updateBook(bookDto);
     }

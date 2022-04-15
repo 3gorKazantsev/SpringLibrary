@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/author")
+@RequestMapping(value = "/api/author", produces = "application/json; charset=UTF-8")
 public class AuthorController {
 
     private final AuthorService authorService;

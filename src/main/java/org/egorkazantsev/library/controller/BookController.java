@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/book")
+@RequestMapping(value = "/api/book", produces = "application/json; charset=UTF-8")
 @RequiredArgsConstructor
 public class BookController {
 

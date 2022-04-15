@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/order")
+@RequestMapping(value = "/api/order", produces = "application/json; charset=UTF-8")
 public class OrderController {
 
     private final OrderService orderService;
